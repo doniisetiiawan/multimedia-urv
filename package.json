@@ -1,0 +1,28 @@
+{
+  "name": "multimedia-urv",
+  "description": "Build a multimedia Application with Node.js",
+  "keywords": [
+    "MVC",
+    "Express Application",
+    "Expressjs",
+    "Expressjs images upload",
+    "Expressjs video upload"
+  ],
+  "version": "1.0.0",
+  "scripts": {
+    "server": "nodemon --watch server app.js"
+  },
+  "main": "app.js",
+  "author": "Doni Setiawan <donisetiawan.050@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "nodemon": "^2.0.2",
+    "prettier": "1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

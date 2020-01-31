@@ -13,6 +13,11 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "consistent-return": "off",
+    "no-shadow": "off",
+    "eqeqeq": "off",
+    "prefer-const": "off"
   }
 }

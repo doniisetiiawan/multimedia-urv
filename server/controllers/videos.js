@@ -1,5 +1,4 @@
 const fs = require('fs');
-const mime = require('mime');
 const Videos = require('../models/videos');
 
 const VIDEO_TYPES = [
@@ -24,13 +23,13 @@ exports.show = (req, res) => {
     });
 };
 
-exports.uploadVideo = function (req, res) {
+exports.uploadVideo = (req, res) => {
   let src;
   let dest;
   let targetPath;
   console.log(req);
   let tempPath = req.file.path;
-  let type = mime.lookup(req.file.mimetype);
+  let type = req.file.mimetype;
   req.file.path.split(/[. ]+/).pop();
   if (VIDEO_TYPES.indexOf(type) == -1) {
     return res
@@ -70,4 +69,9 @@ exports.uploadVideo = function (req, res) {
       res.redirect('videos');
     });
   });
+};
+
+exports.hasAuthorization = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/login');
 };

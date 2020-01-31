@@ -1,5 +1,4 @@
 const fs = require('fs');
-const mime = require('mime');
 const Images = require('../models/images');
 
 const IMAGE_TYPES = [
@@ -22,13 +21,13 @@ exports.show = (req, res) => {
     });
 };
 
-exports.uploadImage = function (req, res) {
+exports.uploadImage = (req, res) => {
   let src;
   let dest;
   let targetPath;
-  const tempPath = req.file.path;
+  let tempPath = req.file.path;
   console.log(req.file);
-  const type = mime.lookup(req.file.mimetype);
+  let type = req.file.mimetype;
   req.file.path.split(/[. ]+/).pop();
   if (IMAGE_TYPES.indexOf(type) == -1) {
     return res
@@ -51,12 +50,14 @@ exports.uploadImage = function (req, res) {
   });
 
   src.on('end', () => {
-    const image = new Images(req.body);
+    let image = new Images(req.body);
     image.imageName = req.file.originalname;
     image.user = req.user;
     image.save((error) => {
       if (error) {
-        return res.status(400).send({ message: error });
+        return res.status(400).send({
+          message: error,
+        });
       }
     });
     fs.unlink(tempPath, (err) => {

@@ -30,7 +30,10 @@ const app = express();
 
 const config = require('./server/config/config');
 
-mongoose.connect(config.url);
+mongoose.connect(config.url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Make sure MongoDB is running.',
@@ -119,7 +122,7 @@ app.use((req, res, next) => {
 });
 
 if (app.get('env') === 'development') {
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -128,7 +131,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -139,8 +142,6 @@ app.use((err, req, res, next) => {
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(
-    `Express server listening on port ${
-      server.address().port
-    }`,
+    `Express server listening on port ${app.get('port')}`,
   );
 });
